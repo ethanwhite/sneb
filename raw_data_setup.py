@@ -23,15 +23,24 @@ def install_bbs():
         print("To download again delete ./data/bbs.sqlite")
 
 def install_bioclim():
-    """Download the 2.5 minute Bioclim data"""
-    if not os.path.isfile('./data/bioclim_data_2pt5m.zip'):
-        urllib.urlretrieve("http://biogeo.ucdavis.edu/data/climate/worldclim/1_4/grid/cur/bio_2-5m_bil.zip", "./data/bioclim_data_2pt5m.zip")
-        with ZipFile('./data/bioclim_data_2pt5m.zip') as bioclimzip:
-            bioclimzip.extractall(path='./data/')
+    """Download the 2.5 minute Bioclim data
+
+    Data is stored in a wc2-5 subdirectory to allow the dismo library in R
+    to automatically discover the data
+
+    """
+    bioclim_file_path = './data/wc2-5/bio_2-5m_bil.zip'
+    if not os.path.isfile(bioclim_file_path):
+        if not os.path.isdir('./data/wc2-5'):
+            os.mkdir('./data/wc2-5')
+        print("Downloading Bioclim data. This may take a few minutes...")
+        urllib.urlretrieve("http://biogeo.ucdavis.edu/data/climate/worldclim/1_4/grid/cur/bio_2-5m_bil.zip", bioclim_file_path)
+        with ZipFile(bioclim_file_path) as bioclimzip:
+            bioclimzip.extractall(path='./data/wc2-5/')
             print("Downloaded Bioclim data")
     else:
         print("Bioclim data had was already downloaded")
-        print("To download again delete ./data/bioclim_data_2pt5m.zip")
+        print("To download again delete " + bioclim_file_path)
 
 def write_data_hashes():
     """Store sha1 hashes for all data files for provenance"""
