@@ -5,3 +5,6 @@ JOIN bbs.weather ON bbs.counts.countrynum = bbs.weather.countrynum AND bbs.count
 JOIN bbs.routes ON bbs.counts.countrynum = bbs.routes.countrynum AND bbs.counts.statenum = bbs.routes.statenum AND bbs.counts.route = bbs.routes.route
 WHERE bbs.weather.runtype = 1
 LIMIT 100
+
+SELECT statenum * 1000 + route, lati, loni, stratum, bcr
+FROM routes
