@@ -1,4 +1,5 @@
 ./data/bio10.bil,2b23fcf33c8140efd0d7078bc397cf2dc3fa0c78
+./data/bbs_locations.csv,d486727d977170fc0e59e11df88ab6d30a245c56
 ./data/bio2.hdr,c26dfda66af566f5590f92c6524c81729d855c20
 ./data/bio5.hdr,3b62d74d313189ba4d10a66f00062f80647d55f6
 ./data/bio10.hdr,afa7b845a6ccd7c8b2e24e927423dff89c47a856

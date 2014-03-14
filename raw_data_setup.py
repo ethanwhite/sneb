@@ -1,9 +1,17 @@
 import os
 import glob
 import hashlib
+import pandas
+import sqlite3
 import sys
 import urllib
 from zipfile import ZipFile
+
+def get_bbs_locations():
+    """Extract BBS route location data and write to file"""
+    con = sqlite3.connect("./data/bbs.sqlite")
+    bbs_locations = pandas.io.sql.read_frame("SELECT statenum * 1000 + route AS siteID, lati AS lat, loni AS long FROM routes;", con)
+    bbs_locations.to_csv("./data/bbs_locations.csv", index=False)
 
 def install_bbs():
     """Install the BBS data using the EcoData Retriever"""
@@ -32,13 +40,14 @@ def write_data_hashes():
         for data_file in data_files:
             hash = hashlib.sha1(open(data_file, 'r').read()).hexdigest()
             output_file.writelines("%s,%s\n" % (data_file, hash))
-    
+
 def main():
     args = sys.argv[1:]
     if ('bbs' in args) or ('all' in args):
         install_bbs()
     if ('bioclim' in args) or ('all' in args):
         install_bioclim()
+    get_bbs_locations()
     write_data_hashes()
 
 if __name__ == '__main__':
