@@ -13,6 +13,14 @@ def get_bbs_locations():
     bbs_locations = pandas.io.sql.read_frame("SELECT statenum * 1000 + route AS siteID, lati AS lat, loni AS long FROM routes;", con)
     bbs_locations.to_csv("./data/bbs_locations.csv", index=False)
 
+def get_data_file_paths():
+    """Get the paths for all data files in the project"""
+    data_file_paths = []
+    for dirs, _, filenames in os.walk('data'):
+        for filename in filenames:
+            data_file_paths.append(os.path.join(dirs, filename))
+    return data_file_paths
+
 def install_bbs():
     """Install the BBS data using the EcoData Retriever"""
     if not os.path.isfile('./data/bbs.sqlite'):
@@ -44,7 +52,7 @@ def install_bioclim():
 
 def write_data_hashes():
     """Store sha1 hashes for all data files for provenance"""
-    data_files = glob.glob('./data/*')
+    data_files = get_data_file_paths()
     with open('data_hashes.txt', 'w') as output_file:
         for data_file in data_files:
             hash = hashlib.sha1(open(data_file, 'r').read()).hexdigest()
