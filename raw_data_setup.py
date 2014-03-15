@@ -1,5 +1,4 @@
 import os
-import glob
 import hashlib
 import pandas
 import sqlite3
