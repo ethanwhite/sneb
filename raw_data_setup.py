@@ -10,7 +10,8 @@ from zipfile import ZipFile
 def get_bbs_locations():
     """Extract BBS route location data and write to file"""
     con = sqlite3.connect("./data/bbs.sqlite")
-    bbs_locations = pandas.io.sql.read_frame("SELECT statenum * 1000 + route AS siteID, lati AS lat, loni AS long FROM routes;", con)
+    query = "SELECT statenum * 1000 + route AS siteID, lati AS lat, loni AS long FROM routes;"
+    bbs_locations = pandas.io.sql.read_frame(query, con)
     bbs_locations.to_csv("./data/bbs_locations.csv", index=False)
 
 def get_data_file_paths():
@@ -42,7 +43,8 @@ def install_bioclim():
         if not os.path.isdir('./data/wc2-5'):
             os.mkdir('./data/wc2-5')
         print("Downloading Bioclim data. This may take a few minutes...")
-        urllib.urlretrieve("http://biogeo.ucdavis.edu/data/climate/worldclim/1_4/grid/cur/bio_2-5m_bil.zip", bioclim_file_path)
+        bioclim_url = "http://biogeo.ucdavis.edu/data/climate/worldclim/1_4/grid/cur/bio_2-5m_bil.zip"
+        urllib.urlretrieve(bioclim_url, bioclim_file_path)
         with ZipFile(bioclim_file_path) as bioclimzip:
             bioclimzip.extractall(path='./data/wc2-5/')
             print("Downloaded Bioclim data")
