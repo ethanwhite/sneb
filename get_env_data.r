@@ -9,5 +9,5 @@ bbs_env = data.frame(bbs_locs)
 
 bioclim_data = getData("worldclim", var = "bio", res = 2.5, path="./data/")
 bioclim_bbs_vals = extract(bioclim_data, bbs_locs)
-bbs_env[4:(4+ncol(bioclim_bbs_vals))] = data.frame(bioclim_bbs_vals)
+bbs_env = cbind(bbs_env, data.frame(bioclim_bbs_vals))
 write.csv(bbs_env, file="./data/bbs_env_data.csv" )
