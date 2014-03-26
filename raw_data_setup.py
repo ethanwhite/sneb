@@ -6,6 +6,10 @@ import sys
 import urllib
 from zipfile import ZipFile
 
+def get_bbs_env():
+    """Run an R script the combines the BBS and environmental data"""
+    os.system("Rscript get_env_data.r")
+    
 def get_bbs_locations():
     """Extract BBS route location data and write to file"""
     con = sqlite3.connect("./data/bbs.sqlite")
@@ -66,6 +70,7 @@ def main():
     if ('bioclim' in args) or ('all' in args):
         install_bioclim()
     get_bbs_locations()
+    get_bbs_env()
     write_data_hashes()
 
 if __name__ == '__main__':
