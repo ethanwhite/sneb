@@ -1,9 +1,7 @@
 data/bbs_locations.csv,d486727d977170fc0e59e11df88ab6d30a245c56
 data/.~lock.bbs_locations.csv#,a3b6008ebf711eba72f66e71e67f973747cfe676
-data/bbs.sqlite,6b3ca85ea22929b1682ebef29dd1a7cbd497a21f
+data/bbs.sqlite,56ece9789bdf156e55094abf0b36cca7ecc36e16
 data/bbs_comp_data.csv,d2b3db964a090e4753ddfeda908c12419041e2d7
-data/bbs_loc_test.csv,613a6aa5db94de68cd29e66c01cd7050c019a3b4
-data/bbs_loc_test_fail.csv,3d7c95f9c5d76db752af6f235d4a44ad4cddcda5
 data/bbs_env_data.csv,81ed48b2ea1c5c53e3df5719d64fee1ac5e00ac3
 data/wc2-5/bio10.bil,2b23fcf33c8140efd0d7078bc397cf2dc3fa0c78
 data/wc2-5/bio2.hdr,c26dfda66af566f5590f92c6524c81729d855c20
