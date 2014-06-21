@@ -6,6 +6,32 @@ import sys
 import urllib
 from zipfile import ZipFile
 
+def get_bbs_composition():
+    """Get the composition data from BBS"""
+    if not os.path.isfile('./data/bbs_comp_data.csv'):
+        con = sqlite3.connect('./data/bbs.sqlite')
+        cur = con.cursor()
+        query = """SELECT counts.statenum * 1000 + counts.route, counts.year,
+                   species.aou, species.genus, species.species, counts.SpeciesTotal
+                   FROM counts
+                   JOIN species ON counts.aou = species.aou
+                   JOIN weather ON counts.countrynum = weather.countrynum
+                   AND counts.statenum = weather.statenum
+                   AND counts.route = weather.route
+                   AND counts.rpid = weather.rpid AND counts.year = weather.year
+                   JOIN routes ON counts.countrynum = routes.countrynum
+                   AND counts.statenum = routes.statenum
+                   AND counts.route = routes.route
+                   WHERE weather.runtype = 1"""
+        cur.execute(query)
+        composition_data = pandas.DataFrame(cur.fetchall(),
+                                            columns=['siteID', 'year', 'aou',
+                                                     'genus', 'species', 'count'])
+        composition_data.to_csv('./data/bbs_comp_data.csv', index=False)
+    else:
+        print("bbs_comp_data.csv already exists")
+        print("If you want to recreate it please delete the current file")
+
 def get_bbs_env():
     """Run an R script the combines the BBS and environmental data"""
     os.system("Rscript get_env_data.r")
@@ -71,6 +97,7 @@ def main():
         install_bioclim()
     get_bbs_locations()
     get_bbs_env()
+    get_bbs_composition()
     write_data_hashes()
 
 if __name__ == '__main__':
