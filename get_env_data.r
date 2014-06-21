@@ -2,7 +2,10 @@
 # setwd("~/Dropbox/Research/SNEB")
 library(dismo)
 
-bbs_locs = read.csv("./data/bbs_locations.csv")
+# Specify column classes due to high number of decimal points in some values
+# which leads to decimal values being treated as strings
+bbs_locs = read.csv("./data/bbs_locations.csv", colClasses=c("lat"="numeric", "long"="numeric"))
+
 coordinates(bbs_locs) = c("long", "lat")
 
 bbs_env = data.frame(bbs_locs)
